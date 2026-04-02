@@ -8,6 +8,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.modrinth.minotaur' version '2.+'
+}
+
 apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle'
 
@@ -76,6 +80,17 @@ processResources {
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         expand replaceProps
     }
+}
+
+modrinth {
+    token = System.getenv('MODRINTH_API_TOKEN')
+    projectId = modrinth_id
+    versionNumber = mod_version
+    versionType = 'release'
+    uploadFile = jar
+    gameVersions = [mc_version]
+    loaders = ['forge']
+    gameCategories = ['worldgen']
 }
 
 jar {
